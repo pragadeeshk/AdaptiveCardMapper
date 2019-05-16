@@ -52,15 +52,15 @@
   border-color: transparent;
   border-style: solid;
   border-width: 0.5px;
-  background-color: purple;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  border-color: white;
 }
 
 .variable-selected {
   @extend .variable;
-  border-color: white;
+  background-color: purple;
 }
 
 .variable-tagged {

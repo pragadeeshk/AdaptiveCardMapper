@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "adaptivecardgenerator": "1.0.3",
+    "adaptivecardgenerator": "1.0.4",
     "bootstrap": "^4.3.1",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
+    "react-adaptivecards": "^0.1.3",
     "react-bootstrap": "^1.0.0-beta.8",
     "react-dom": "^16.8.6",
     "react-json-tree": "^0.11.2",
