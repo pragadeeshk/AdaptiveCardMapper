@@ -65,6 +65,11 @@
 
 .variable-tagged {
   @extend .variable-selected;
+  background-color: blueviolet;
+}
+
+.variable-data-path {
+  @extend .variable-selected;
   background-color: teal;
   margin-left: 0.5rem;
 }

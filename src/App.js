@@ -38,27 +38,29 @@ class App extends React.Component {
   updatedSelectedVariable = (variable) => {
     this.setState({
       selectedVariable: variable,
-      showCard : false,
+      showCard: false,
     })
   }
 
   bindSelectedData = (data) => {
-    if(this.state.selectedVariable) {
+    if (this.state.selectedVariable) {
       var keys = [...this.state.keys]
       var hasAllVariablesTagged = true;
       for (var i = 0; i < keys.length; i++) {
         var key = keys[i];
-        if (this.state.selectedVariable.id === key.id) {
+        if (this.state.selectedVariable.id === key.id
+          && this.state.selectedVariable.path === key.path) {
           key.dataPath = data;
         }
-        if(hasAllVariablesTagged && key.dataPath === undefined) {
+        if (hasAllVariablesTagged && key.dataPath === undefined) {
           hasAllVariablesTagged = false;
         }
       }
       this.setState({
         keys,
         hasAllVariablesTagged,
-        showCard : false,
+        showCard: false,
+        selectedVariable: null
       })
     }
   }
@@ -67,14 +69,14 @@ class App extends React.Component {
     if (success) {
       this.cardGenerator = new CardGenerator(value);
       var keys = this.cardGenerator.fetchKeys();
-      var hasAllVariablesTagged = true;
-      for(var i in keys) {
-        if(hasAllVariablesTagged && keys[i].dataPath === undefined) {
+      var hasAllVariablesTagged = keys && keys.length > 0;
+      for (var i in keys) {
+        if (hasAllVariablesTagged && keys[i].dataPath === undefined) {
           hasAllVariablesTagged = false;
         }
       }
       this.setState({
-        showCard : false,
+        showCard: false,
         keys: keys,
         template: value,
         showVariables: true,
@@ -100,18 +102,19 @@ class App extends React.Component {
                 onSubmit={this.updateTemplate} />
               {
                 this.state.showVariables &&
-                <Variables template={this.state.template}/>
+                <Variables template={this.state.template} />
               }
               {
                 this.state.hasAllVariablesTagged &&
+                this.state.dataSchema &&
                 <Button
                   className="mt-5 mb-3"
                   as="input"
                   type="button"
                   value="Verify"
-                  onClick={()=>{
+                  onClick={() => {
                     this.setState({
-                      showCard : true
+                      showCard: true
                     })
                   }}
                 />
@@ -146,9 +149,9 @@ class App extends React.Component {
     var json = this.cardGenerator.bindDataSchema(this.state.keys);
     var newCardGenerator = new CardGenerator(json);
     var card = newCardGenerator.getCard(this.state.dataSchema);
-    return(
+    return (
       <div>
-        <AdaptiveCard style={{border: '1px solid black'}}
+        <AdaptiveCard style={{ border: '1px solid black' }}
           payload={card}>
         </AdaptiveCard>
         <Button
@@ -156,13 +159,13 @@ class App extends React.Component {
           as="input"
           type="button"
           value="Finish"
-          onClick={()=>{
+          onClick={() => {
             this.setState({
-              showModal : true,
-              showCard : false,
-              finalSchema : json
+              showModal: true,
+              showCard: false,
+              finalSchema: json
             })
-          }}/>
+          }} />
       </div>
     );
   }
@@ -171,7 +174,7 @@ class App extends React.Component {
     return (
       <Modal
         show={this.state.showModal}
-        onHide={()=>{
+        onHide={() => {
           this.setState({
             showModal: false,
             showCard: true
@@ -186,21 +189,36 @@ class App extends React.Component {
           </ModalTitle>
         </ModalHeader>
         <ModalBody>
-          <span>{JSON.stringify(this.state.finalSchema)}</span>
+          <span>{JSON.stringify(this.state.finalSchema, null, 4)}</span>
         </ModalBody>
         <ModalFooter>
-          <Button variant="secondary" onClick={()=>{
+          <Button variant="secondary" onClick={() => {
             this.setState({
               showModal: false,
               showCard: true
             })
           }}>Close</Button>
-          <Button variant="primary" onClick={()=>{
-            
-          }}>Save changes</Button>
+          <Button variant="primary" onClick={() => {
+            this.copyStringToClipboard(JSON.stringify(this.state.finalSchema));
+            this.setState({
+              showModal: false,
+              showCard: true
+            })
+          }}>Copy</Button>
         </ModalFooter>
       </Modal>
     );
+  }
+
+  copyStringToClipboard = (str) => {
+    var el = document.createElement('textarea');
+    el.value = str;
+    el.setAttribute('readonly', '');
+    el.style = { position: 'absolute', left: '-9999px' };
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
   }
 }
 
