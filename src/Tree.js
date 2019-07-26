@@ -39,11 +39,13 @@ export default class Tree extends React.Component {
   onNodeClick = (value, nodeType, keyPath) => {
     if (nodeType === "Object" || nodeType === "Array") return;
     if (keyPath) {
-      var path = "";
-      for (var i = 0; i < keyPath.length; i++) {
-        path = keyPath[i] + "/" + path;
+      var route = ""
+      for (var j = keyPath.length-1; j >= 0; j--) {
+        var item = keyPath[j];
+        item = Number.isInteger(item) ? "[" + item + "]" : route ? "." + item : item
+        route = route + item
       }
-      value.onDataSelected(path);
+      value.onDataSelected("{"+route+"}");
     }
   }
 }

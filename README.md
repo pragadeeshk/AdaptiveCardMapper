@@ -1,68 +1,60 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Adaptive Cards Mapper
 
-## Available Scripts
+## Introduction
 
-In the project directory, you can run:
+Adaptive cards mapper is built to make it easier for any back-end developer to bind dynamic API JSON data responses from webservice or database to adaptive card structure.
 
-### `npm start`
+## Motivation
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Currently adaptive cards are built using [Adaptive Cards Designer](https://adaptivecards.io/designer/) tool. The designed adaptive card structure can be exported from the tool and rendered by adaptive cards SDKs available in multiple client platforms.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+As of Adaptive cards version 1.2, there is no direct way to bind dynamic data with the adaptive cards. Developers have to manually parse and map the data and card. It is a tedious,, time consuming and error prone task. Also, change in data or adaptive card structure need rewriting the mapping logic.
 
-### `npm test`
+To eliminate/minimize this effort by the developer, AdaptiveCardMapper is created. This allows the developer to input the adaptive card structure and data schema, map the variables with a point-and-click UI and export the mapped schema to the back-end.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## How it works
 
-### `npm run build`
+* Design the adaptive card using [Adaptive Cards Designer](https://adaptivecards.io/designer/) tool.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![](images/designer.png)
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+* Provide appropriate ID for elements that will hold dynamic contents
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![](images/enterID.png)
 
-### `npm run eject`
+* Click "Copy JSON" in the tool bar.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+* Open AdaptiveCardMapper tool
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![](images/mapper.png)
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+* Paste Adaptive card json from designer into first text box and Click Submit to list all the variables in the adaptive card json
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+![](images/ids.png)
 
-## Learn More
+* Paste content JSON schema in second text box and click submit to display the JSON Tree.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![](images/tree.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+* Click on anyone of the variable in left pane.
 
-### Code Splitting
+* Click on appropriate data field from the JSON tree that will be associated to the selected variable.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+![](images/tagging.gif)
 
-### Analyzing the Bundle Size
+* Map values to all variables.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+![](images/tagged-full.png)
 
-### Making a Progressive Web App
+* Click verify to display the actual adaptive card bound with data.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+![](images/render.png)
 
-### Advanced Configuration
+* Click Finish if the rendered adaptive card looks fine.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+* Copy JSON from the dialog.
 
-### Deployment
+![](images/final.png)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+## Back-end Integration
 
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
